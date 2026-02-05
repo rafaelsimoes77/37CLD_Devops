@@ -54,9 +54,7 @@ jobs:
     if: github.ref == 'refs/heads/develop'
     steps:
       - name: Deploy 
-        shell: bash
-        run: |
-          echo "Deploy STG"
+        run: echo "Deploy STG"
           
   Smoketest:
     runs-on: ubuntu-latest
@@ -65,9 +63,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Run Smoke Test
-        shell: bash
-        run: |
-          sh 'src/main/scripts/smoketest.sh'
+        run: sh 'src/main/scripts/smoketest.sh'
           
   testeIntegrados:
     runs-on: ubuntu-latest
@@ -76,9 +72,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Run Integration Tests
-        shell: bash
-        run: |
-          sh 'src/main/scripts/testeIntegrado.sh'   
+        run: sh 'src/main/scripts/testeIntegrado.sh'   
 
   deploy-Pre:
     runs-on: ubuntu-latest
@@ -88,9 +82,7 @@ jobs:
     if: github.ref == 'refs/heads/release'
     steps:
       - name: Deploy 
-        shell: bash
-        run: |
-          echo "Deploy PRE"
+        run: echo "Deploy PRE"
     
   SmoketestPre:
     runs-on: ubuntu-latest
@@ -99,9 +91,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Run Smoke Test Pre
-        shell: bash
-        run: |
-          sh 'src/main/scripts/smoketest.sh'          
+        run: sh 'src/main/scripts/smoketest.sh'          
             
   testeFuncionais:
     runs-on: ubuntu-latest
@@ -110,9 +100,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Run Functional Tests
-        shell: bash
-        run: |
-          sh 'src/main/scripts/testesfuncionais.sh'
+        run: sh 'src/main/scripts/testesfuncionais.sh'
 
   testePerformance:
     runs-on: ubuntu-latest
@@ -121,13 +109,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Run Performance Tests
-        shell: bash
-        run: |
-          sh 'src/main/scripts/performance.sh'
+        run: sh 'src/main/scripts/performance.sh'
 
   smoke-Prod:
     runs-on: ubuntu-latest
-    # needs: deploy-Prod  # Descomente e ajuste se você tiver um job de deploy para produção
+    needs: build
     if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v3
@@ -141,4 +127,4 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Performance Producao
-        run: sh 'src/main/scripts/performance.sh'          
+        run: sh 'src/main/scripts/performance.sh'
