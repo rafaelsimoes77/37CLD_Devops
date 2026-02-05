@@ -9,6 +9,18 @@ on:
 jobs:
   unit-test:
     runs-on: ubuntu-latest
+
+name: pipeline
+
+on:
+  push:
+    branches: [ "main", "develop", "release" ]
+  pull_request:
+    branches: [ "main", "develop", "release" ]
+
+jobs:
+  unit-test:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
@@ -78,3 +90,11 @@ jobs:
         shell: bash
         run: |
           sh 'src/main/scripts/testeIntegrado.sh'
+
+
+
+
+
+        
+    
+
