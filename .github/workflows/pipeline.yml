@@ -124,3 +124,21 @@ jobs:
         shell: bash
         run: |
           sh 'src/main/scripts/performance.sh'
+
+  smoke-Prod:
+    runs-on: ubuntu-latest
+    # needs: deploy-Prod  # Descomente e ajuste se você tiver um job de deploy para produção
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v3
+      - name: Smoke Test Producao
+        run: sh 'src/main/scripts/smoketest.sh'
+
+  performance-Prod:
+    runs-on: ubuntu-latest
+    needs: smoke-Prod
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v3
+      - name: Performance Producao
+        run: sh 'src/main/scripts/performance.sh'          
